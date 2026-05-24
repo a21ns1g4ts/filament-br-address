@@ -1,10 +1,21 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace A21ns1g4ts\FilamentBrAddress\Tests;
 
+use A21ns1g4ts\FilamentBrAddress\FilamentBrAddressServiceProvider;
+use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
+use BladeUI\Icons\BladeIconsServiceProvider;
+use Filament\Actions\ActionsServiceProvider;
+use Filament\FilamentServiceProvider;
+use Filament\Forms\FormsServiceProvider;
+use Filament\Infolists\InfolistsServiceProvider;
+use Filament\Notifications\NotificationsServiceProvider;
+use Filament\Support\SupportServiceProvider;
+use Filament\Tables\TablesServiceProvider;
+use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
-use VendorName\Skeleton\SkeletonServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -13,24 +24,38 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'VendorName\\Skeleton\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'A21ns1g4ts\\FilamentBrAddress\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            SkeletonServiceProvider::class,
+            ActionsServiceProvider::class,
+            BladeHeroiconsServiceProvider::class,
+            BladeIconsServiceProvider::class,
+            FilamentServiceProvider::class,
+            FormsServiceProvider::class,
+            InfolistsServiceProvider::class,
+            LivewireServiceProvider::class,
+            NotificationsServiceProvider::class,
+            SupportServiceProvider::class,
+            TablesServiceProvider::class,
+            WidgetsServiceProvider::class,
+            FilamentBrAddressServiceProvider::class,
         ];
     }
 
     public function getEnvironmentSetUp($app)
     {
-        config()->set('database.default', 'testing');
+        $compiledViewsPath = __DIR__ . '/../build/testing/views';
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_skeleton_table.php.stub';
-        $migration->up();
-        */
+        if (! is_dir($compiledViewsPath)) {
+            mkdir($compiledViewsPath, 0777, true);
+        }
+
+        config()->set('view.compiled', $compiledViewsPath);
+        config()->set('app.key', 'base64:7kfNWPvREHJUlxT2Yhi+9mqVdr0dLs/p5Z6wJl0mebg=');
+        config()->set('database.default', 'testing');
     }
 }
