@@ -1,8 +1,8 @@
 # Filament BR Address
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/a21ns1g4ts/filament-br-address.svg?style=flat-square)](https://packagist.org/packages/a21ns1g4ts/filament-br-address)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/a21ns1g4ts/filament-br-address/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/a21ns1g4ts/filament-br-address/actions?query=workflow%3ATests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/a21ns1g4ts/filament-br-address/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/a21ns1g4ts/filament-br-address/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/a21ns1g4ts/filament-br-address/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/a21ns1g4ts/filament-br-address/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Coverage](https://img.shields.io/codecov/c/github/a21ns1g4ts/filament-br-address/main?style=flat-square)](https://codecov.io/gh/a21ns1g4ts/filament-br-address)
 [![Total Downloads](https://img.shields.io/packagist/dt/a21ns1g4ts/filament-br-address.svg?style=flat-square)](https://packagist.org/packages/a21ns1g4ts/filament-br-address)
 
 Brazilian address fields for Filament, with CEP lookup and an optional map field that ships with Mapbox and Google Maps support.

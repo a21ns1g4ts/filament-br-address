@@ -79,7 +79,7 @@
 
     <div
         x-show="showControls"
-        class="absolute bottom-4 right-4 z-40 flex items-center gap-2 rounded-xl border border-gray-200 bg-white/95 px-2 py-1.5 shadow-lg dark:border-gray-800 dark:bg-gray-900/95"
+        class="absolute bottom-4 right-4 z-[40] flex items-center gap-2 rounded-xl border border-gray-200 bg-white/95 px-2 py-1.5 shadow-lg dark:border-gray-800 dark:bg-gray-900/95"
     >
         <div class="flex items-center rounded-lg bg-gray-100/50 p-0.5 dark:bg-gray-800/50">
             <button type="button" x-on:click="zoomIn()" x-tooltip="'Aproximar'" class="flex h-7 w-7 items-center justify-center rounded-md text-gray-600 shadow-sm transition-all hover:bg-white dark:text-gray-300 dark:hover:bg-gray-700">
@@ -95,9 +95,9 @@
         <button
             type="button"
             x-on:click="toggle3D()"
-            x-tooltip="'Alternar visão 3D'"
+            x-tooltip="'Alternar Visão 3D'"
             class="flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
-            :class="is3D ? 'text-primary-600 bg-primary-50 dark:bg-primary-500/10' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+            :class="is3D ? 'text-primary-600 bg-primary-50' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
         >
             <x-heroicon-o-cube class="h-5 w-5" />
         </button>
@@ -105,21 +105,21 @@
         <button
             type="button"
             x-on:click="toggleTraffic()"
-            x-tooltip="'Mostrar trânsito'"
+            x-tooltip="'Mostrar Trânsito'"
             class="flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
-            :class="showTraffic ? 'text-primary-600 bg-primary-50 dark:bg-primary-500/10' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+            :class="showTraffic ? 'text-primary-600 bg-primary-50' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
         >
             <x-heroicon-o-truck class="h-5 w-5" />
         </button>
 
         <div class="relative" x-on:click.away="styleMenuOpen = false">
-            <button type="button" x-on:click="styleMenuOpen = ! styleMenuOpen" x-tooltip="'Trocar estilo do mapa'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+            <button type="button" x-on:click="styleMenuOpen = ! styleMenuOpen" x-tooltip="'Trocar Estilo do Mapa'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
                 <x-heroicon-o-square-3-stack-3d class="h-5 w-5" />
             </button>
             <div
                 x-show="styleMenuOpen"
                 x-transition
-                class="absolute bottom-12 right-0 z-[110] w-44 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-800"
+                class="absolute bottom-12 right-0 z-[110] w-40 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-800"
                 style="display: none;"
             >
                 <template x-for="(style, key) in styles" :key="key">
@@ -127,7 +127,7 @@
                         type="button"
                         x-on:click="setStyle(key)"
                         class="flex w-full items-center px-4 py-2.5 text-left text-xs font-medium hover:bg-gray-50 dark:hover:bg-gray-700"
-                        :class="currentStyle === key ? 'text-primary-600 bg-primary-50 dark:bg-primary-500/10' : 'text-gray-600 dark:text-gray-400'"
+                        :class="currentStyle === key ? 'text-primary-600 bg-primary-50' : 'text-gray-600 dark:text-gray-400'"
                     >
                         <span x-text="style.label"></span>
                     </button>
@@ -137,19 +137,19 @@
 
         <div class="mx-0.5 h-4 w-px bg-gray-200 dark:bg-gray-700"></div>
 
-        <button type="button" x-on:click="getCurrentLocation()" x-tooltip="'Minha localização'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-emerald-600 dark:text-gray-300 dark:hover:bg-gray-700">
+        <button type="button" x-on:click="getCurrentLocation()" x-tooltip="'Minha Localização'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-emerald-600 dark:text-gray-300 dark:hover:bg-gray-700">
             <x-heroicon-o-cursor-arrow-rays class="h-5 w-5" />
         </button>
-        <button type="button" x-on:click="goToMarker()" x-tooltip="'Ir para marcador'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:text-gray-300 dark:hover:bg-gray-700">
+        <button type="button" x-on:click="goToMarker()" x-tooltip="'Ir para Marcador'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:text-gray-300 dark:hover:bg-gray-700">
             <x-heroicon-o-viewfinder-circle class="h-5 w-5" />
         </button>
-        <button type="button" x-on:click="goToLastGeocoded()" x-show="lastGeocodedLocation" x-tooltip="'Voltar para localização pesquisada'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-indigo-600 dark:text-gray-300 dark:hover:bg-gray-700">
+        <button type="button" x-on:click="goToLastGeocoded()" x-show="lastGeocodedLocation" x-tooltip="'Voltar para Localização Pesquisada'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-indigo-600 dark:text-gray-300 dark:hover:bg-gray-700">
             <x-heroicon-o-map-pin class="h-5 w-5" />
         </button>
-        <button type="button" x-on:click="calculateFromAddress()" x-tooltip="'Recalcular do endereço'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:text-gray-300 dark:hover:bg-gray-700">
+        <button type="button" x-on:click="calculateFromAddress()" x-tooltip="'Recalcular do Endereço'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:text-gray-300 dark:hover:bg-gray-700">
             <x-heroicon-o-arrow-path class="h-5 w-5" />
         </button>
-        <button type="button" x-on:click="resetToInitial()" x-show="initialLocation" x-tooltip="'Resetar para posição inicial'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-warning-600 dark:text-gray-300 dark:hover:bg-gray-700">
+        <button type="button" x-on:click="resetToInitial()" x-show="initialLocation" x-tooltip="'Resetar para Posição Inicial'" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-warning-600 dark:text-gray-300 dark:hover:bg-gray-700">
             <x-heroicon-o-arrow-uturn-left class="h-5 w-5" />
         </button>
     </div>
@@ -157,14 +157,14 @@
     <div
         x-show="loading || error"
         x-transition
-        class="absolute inset-0 z-[100000] flex items-center justify-center rounded-2xl bg-white/80 transition-all duration-300 dark:bg-gray-900/80"
+        class="pointer-events-auto absolute inset-0 z-[100000] flex items-center justify-center rounded-2xl bg-white/80 transition-all duration-300 dark:bg-gray-900/80"
         style="display: none;"
     >
         <div class="flex flex-col items-center gap-3">
             <template x-if="loading">
                 <div class="flex flex-col items-center gap-4">
                     <x-filament::loading-indicator class="h-10 w-10 text-primary-600" />
-                    <span class="text-sm font-bold uppercase tracking-widest text-gray-900 dark:text-white">
+                    <span class="animate-pulse text-sm font-bold uppercase tracking-widest text-gray-900 dark:text-white">
                         {{ __('filament-br-address::filament-br-address.map.loading') }}
                     </span>
                 </div>
@@ -174,7 +174,7 @@
                 <div class="flex flex-col items-center gap-2 rounded-2xl border border-danger-200 bg-white p-4 shadow-xl dark:bg-gray-800">
                     <x-heroicon-o-exclamation-triangle class="h-8 w-8 text-danger-600" />
                     <span class="text-xs font-semibold text-danger-700 dark:text-danger-400" x-text="error"></span>
-                    <button type="button" x-on:click="error = null; destroy(); boot()" class="mt-2 rounded-lg bg-danger-600 px-4 py-1.5 text-[10px] font-bold text-white transition-colors hover:bg-danger-500">
+                    <button type="button" x-on:click="error = null; init()" class="mt-2 rounded-lg bg-danger-600 px-4 py-1.5 text-[10px] font-bold text-white transition-colors hover:bg-danger-500">
                         {{ __('filament-br-address::filament-br-address.map.restart') }}
                     </button>
                 </div>
@@ -182,7 +182,7 @@
         </div>
     </div>
 
-    <div class="absolute bottom-4 left-4 z-40 rounded-xl border border-gray-200 bg-white/95 px-3 py-1.5 shadow-lg dark:border-gray-800 dark:bg-gray-900/95">
+    <div class="absolute bottom-4 left-4 z-[40] rounded-xl border border-gray-200 bg-white/95 px-3 py-1.5 shadow-lg dark:border-gray-800 dark:bg-gray-900/95">
         <div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-tight text-gray-600 dark:text-gray-400">
             <div class="flex items-center gap-1">
                 <span class="font-bold text-primary-600">LAT:</span>
