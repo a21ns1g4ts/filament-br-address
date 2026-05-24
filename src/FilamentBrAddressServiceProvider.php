@@ -47,6 +47,8 @@ class FilamentBrAddressServiceProvider extends PackageServiceProvider
      */
     protected function getMigrations(): array
     {
-        return [];
+        return [
+            'create_addresses_table',
+        ];
     }
 }

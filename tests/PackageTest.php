@@ -21,3 +21,16 @@ it('exposes service provider package metadata', function () {
         ->and(FilamentBrAddressServiceProvider::$viewNamespace)
         ->toBe('filament-br-address');
 });
+
+it('exposes facade helpers', function () {
+    expect(FilamentBrAddressFacade::form())
+        ->toBeArray()
+        ->and(hasAddressMap(FilamentBrAddressFacade::form()))
+        ->toBeTrue()
+        ->and(FilamentBrAddressFacade::tableColumns())
+        ->toBeArray()
+        ->not->toBeEmpty()
+        ->and(FilamentBrAddressFacade::tableFilters())
+        ->toBeArray()
+        ->not->toBeEmpty();
+});
