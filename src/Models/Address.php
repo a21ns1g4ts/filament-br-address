@@ -5,8 +5,29 @@ namespace A21ns1g4ts\FilamentBrAddress\Models;
 use A21ns1g4ts\FilamentBrAddress\Enums\AddressType;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @property int|null $addressable_id
+ * @property string|null $addressable_type
+ * @property string|null $street
+ * @property int|null $number
+ * @property string|null $city
+ * @property string|null $ibge
+ * @property string|null $state
+ * @property string|null $zip_code
+ * @property string|null $neighborhood
+ * @property string|null $country
+ * @property float|null $lat
+ * @property float|null $lng
+ * @property AddressType|string|null $type
+ * @property bool $is_default
+ * @property string|null $complement
+ * @property-read Model|null $addressable
+ * @property-read array{lat: float|null, lng: float|null} $location
+ * @property-read string $full_address
+ */
 class Address extends Model
 {
     protected $fillable = [
@@ -45,24 +66,28 @@ class Address extends Model
         static::saving(function (Address $address): void {
             $address->zip_code = static::normalizeZipCode($address->zip_code);
 
-            if ($address->is_default && $address->addressable) {
-                $address->addressable->addresses()
+            $addresses = $address->addressableAddresses();
+
+            if ($address->is_default && $addresses) {
+                $addresses
                     ->whereKeyNot($address->getKey())
                     ->update(['is_default' => false]);
             }
         });
 
         static::saved(function (Address $address): void {
-            if (! $address->addressable) {
+            $addresses = $address->addressableAddresses();
+
+            if (! $addresses) {
                 return;
             }
 
-            $hasDefault = $address->addressable->addresses()
+            $hasDefault = $addresses
                 ->where('is_default', true)
                 ->exists();
 
             if (! $hasDefault) {
-                $address->addressable->addresses()
+                $addresses
                     ->oldest()
                     ->first()
                     ?->updateQuietly(['is_default' => true]);
@@ -70,12 +95,14 @@ class Address extends Model
         });
 
         static::deleted(function (Address $address): void {
-            if (! $address->addressable) {
+            $addresses = $address->addressableAddresses();
+
+            if (! $addresses) {
                 return;
             }
 
-            if (! $address->addressable->addresses()->where('is_default', true)->exists()) {
-                $address->addressable->addresses()
+            if (! $addresses->where('is_default', true)->exists()) {
+                $addresses
                     ->oldest()
                     ->first()
                     ?->updateQuietly(['is_default' => true]);
@@ -91,9 +118,9 @@ class Address extends Model
     protected function location(): Attribute
     {
         return Attribute::make(
-            get: fn (): array => [
-                'lat' => $this->lat,
-                'lng' => $this->lng,
+            get: fn (mixed $value, array $attributes): array => [
+                'lat' => $attributes['lat'] ?? null,
+                'lng' => $attributes['lng'] ?? null,
             ],
         );
     }
@@ -101,14 +128,14 @@ class Address extends Model
     protected function fullAddress(): Attribute
     {
         return Attribute::make(
-            get: fn (): string => collect([
-                $this->street,
-                $this->number,
-                $this->neighborhood,
-                $this->city,
-                $this->state,
-                $this->zip_code,
-                $this->country,
+            get: fn (mixed $value, array $attributes): string => collect([
+                $attributes['street'] ?? null,
+                $attributes['number'] ?? null,
+                $attributes['neighborhood'] ?? null,
+                $attributes['city'] ?? null,
+                $attributes['state'] ?? null,
+                $attributes['zip_code'] ?? null,
+                $attributes['country'] ?? null,
             ])->filter()->join(', '),
         );
     }
@@ -127,5 +154,18 @@ class Address extends Model
     public static function getComputedLocation(): string
     {
         return 'location';
+    }
+
+    protected function addressableAddresses(): ?MorphMany
+    {
+        $addressable = $this->addressable;
+
+        if (! is_object($addressable) || ! method_exists($addressable, 'addresses')) {
+            return null;
+        }
+
+        $addresses = $addressable->addresses();
+
+        return $addresses instanceof MorphMany ? $addresses : null;
     }
 }

@@ -11,7 +11,7 @@ enum AddressType: string implements HasLabel
     case Billing = 'billing';
     case Shipping = 'shipping';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Home => __('filament-br-address::filament-br-address.address_types.home'),

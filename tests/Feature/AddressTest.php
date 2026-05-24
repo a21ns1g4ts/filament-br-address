@@ -15,6 +15,8 @@ it('exposes the address form schema', function () {
     expect($schema)
         ->toBeArray()
         ->and(hasAddressMap($schema))
+        ->toBeTrue()
+        ->and(hasLoadingOverlay($schema))
         ->toBeTrue();
 });
 

@@ -38,5 +38,13 @@ return [
         'geocode_error' => 'Falha ao localizar este endereco.',
         'missing_mapbox_token' => 'Token do Mapbox nao configurado.',
         'missing_google_key' => 'Chave do Google Maps nao configurada.',
+        'restart' => 'Recomecar',
+        'address_not_found' => 'Endereco nao encontrado',
+        'insufficient_address' => 'Endereco insuficiente.',
+    ],
+
+    'loading_overlay' => [
+        'title' => 'Localizando endereco',
+        'description' => 'Sincronizando dados...',
     ],
 ];

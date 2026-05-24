@@ -14,9 +14,11 @@ trait HasAddresses
 
     public function defaultAddress(): ?Address
     {
-        return $this->addresses()
+        $address = $this->addresses()
             ->where('is_default', true)
             ->first();
+
+        return $address instanceof Address ? $address : null;
     }
 
     /**

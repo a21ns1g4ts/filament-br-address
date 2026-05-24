@@ -38,5 +38,13 @@ return [
         'geocode_error' => 'Failed to locate this address.',
         'missing_mapbox_token' => 'Mapbox token is not configured.',
         'missing_google_key' => 'Google Maps API key is not configured.',
+        'restart' => 'Restart',
+        'address_not_found' => 'Address not found',
+        'insufficient_address' => 'Insufficient address.',
+    ],
+
+    'loading_overlay' => [
+        'title' => 'Locating address',
+        'description' => 'Synchronizing data...',
     ],
 ];

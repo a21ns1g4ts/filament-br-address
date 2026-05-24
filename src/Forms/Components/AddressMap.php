@@ -7,6 +7,8 @@ use Filament\Forms\Components\ViewField;
 
 class AddressMap extends ViewField
 {
+    protected string $view = 'filament-br-address::components.address-map';
+
     protected string | Closure | null $provider = null;
 
     protected string | Closure | null $accessToken = null;
@@ -23,9 +25,7 @@ class AddressMap extends ViewField
     {
         parent::setUp();
 
-        $this
-            ->view('filament-br-address::components.address-map')
-            ->dehydrated(false);
+        $this->dehydrated(false);
     }
 
     public function provider(string | Closure | null $provider): static

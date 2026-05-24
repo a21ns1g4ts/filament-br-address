@@ -2,6 +2,7 @@
 
 use A21ns1g4ts\FilamentBrAddress\Forms\Components\AddressMap;
 use A21ns1g4ts\FilamentBrAddress\Tests\TestCase;
+use Filament\Forms\Components\ViewField;
 
 uses(TestCase::class)->in(__DIR__);
 
@@ -25,6 +26,21 @@ function findAddressMap(array $components): ?AddressMap
     }
 
     return null;
+}
+
+function hasLoadingOverlay(array $components): bool
+{
+    foreach ($components as $component) {
+        if ($component instanceof ViewField && $component->getName() === 'loading_overlay') {
+            return true;
+        }
+
+        if (hasLoadingOverlay(getRawChildComponents($component))) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function getRawChildComponents(mixed $component): array
